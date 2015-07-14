@@ -1,17 +1,19 @@
 package io.vertx.ext.mongo.impl.config;
 
-import com.mongodb.ReadPreference;
-import com.mongodb.Tag;
-import com.mongodb.TagSet;
-import com.mongodb.TaggableReadPreference;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+import com.mongodb.ReadPreference;
+import com.mongodb.Tag;
+import com.mongodb.TagSet;
 
 /**
  * @author <a href="mailto:nscavell@redhat.com">Nick Scavelli</a>

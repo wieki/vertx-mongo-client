@@ -29,364 +29,378 @@ import java.util.List;
  */
 public class Examples {
 
+	@SuppressWarnings("unused")
+	public void exampleCreateDefault(Vertx vertx, JsonObject config) {
 
-  public void exampleCreateDefault(Vertx vertx, JsonObject config) {
+		MongoClient client = MongoClient.createShared(vertx, config);
 
-    MongoClient client = MongoClient.createShared(vertx, config);
+	}
 
-  }
+	@SuppressWarnings("unused")
+	public void exampleCreatePoolName(Vertx vertx, JsonObject config) {
 
-  public void exampleCreatePoolName(Vertx vertx, JsonObject config) {
+		MongoClient client = MongoClient.createShared(vertx, config,
+				"MyPoolName");
 
-    MongoClient client = MongoClient.createShared(vertx, config, "MyPoolName");
+	}
 
-  }
+	@SuppressWarnings("unused")
+	public void exampleCreateNonShared(Vertx vertx, JsonObject config) {
 
-  public void exampleCreateNonShared(Vertx vertx, JsonObject config) {
+		MongoClient client = MongoClient.createNonShared(vertx, config);
 
-    MongoClient client = MongoClient.createNonShared(vertx, config);
+	}
 
-  }
+	public void example1(MongoClient mongoClient) {
 
+		// Document has no id
 
-  public void example1(MongoClient mongoClient) {
+		JsonObject document = new JsonObject().put("title", "The Hobbit");
 
-    // Document has no id
+		mongoClient.save("books", document, res -> {
 
-    JsonObject document = new JsonObject().put("title", "The Hobbit");
+			if (res.succeeded()) {
 
-    mongoClient.save("books", document, res -> {
+				Object id = res.result();
+				System.out.println("Saved book with id " + id);
 
-      if (res.succeeded()) {
+			} else {
+				res.cause().printStackTrace();
+			}
 
-        String id = res.result();
-        System.out.println("Saved book with id " + id);
+		});
 
-      } else {
-        res.cause().printStackTrace();
-      }
+	}
 
-    });
+	public void example2(MongoClient mongoClient) {
 
-  }
+		// Document has an id already
 
-  public void example2(MongoClient mongoClient) {
+		JsonObject document = new JsonObject().put("title", "The Hobbit").put(
+				"_id", "123244");
 
-    // Document has an id already
+		mongoClient.save("books", document, res -> {
 
-    JsonObject document = new JsonObject().put("title", "The Hobbit").put("_id", "123244");
+			if (res.succeeded()) {
 
-    mongoClient.save("books", document, res -> {
+				// ...
 
-      if (res.succeeded()) {
+			} else {
+				res.cause().printStackTrace();
+			}
 
-        // ...
+		});
 
-      } else {
-        res.cause().printStackTrace();
-      }
+	}
 
-    });
+	public void example3(MongoClient mongoClient) {
 
-  }
+		// Document has an id already
 
-  public void example3(MongoClient mongoClient) {
+		JsonObject document = new JsonObject().put("title", "The Hobbit");
 
-    // Document has an id already
+		mongoClient.insert("books", document, res -> {
 
-    JsonObject document = new JsonObject().put("title", "The Hobbit");
+			if (res.succeeded()) {
 
-    mongoClient.insert("books", document, res -> {
+				Object id = res.result();
+				System.out.println("Inserted book with id " + id);
 
-      if (res.succeeded()) {
+			} else {
+				res.cause().printStackTrace();
+			}
 
-        String id = res.result();
-        System.out.println("Inserted book with id " + id);
+		});
 
-      } else {
-        res.cause().printStackTrace();
-      }
+	}
 
-    });
+	public void example4(MongoClient mongoClient) {
 
-  }
+		// Document has an id already
 
-  public void example4(MongoClient mongoClient) {
+		JsonObject document = new JsonObject().put("title", "The Hobbit").put(
+				"_id", "123244");
 
-    // Document has an id already
+		mongoClient.insert("books", document, res -> {
 
-    JsonObject document = new JsonObject().put("title", "The Hobbit").put("_id", "123244");
+			if (res.succeeded()) {
 
-    mongoClient.insert("books", document, res -> {
+				// ...
 
-      if (res.succeeded()) {
+			} else {
 
-        //...
+				// Will fail if the book with that id already exists.
+			}
 
-      } else {
+		});
 
-        // Will fail if the book with that id already exists.
-      }
+	}
 
-    });
+	public void example5(MongoClient mongoClient) {
 
-  }
+		// Match any documents with title=The Hobbit
+		JsonObject query = new JsonObject().put("title", "The Hobbit");
 
-  public void example5(MongoClient mongoClient) {
+		// Set the author field
+		JsonObject update = new JsonObject().put("$set",
+				new JsonObject().put("author", "J. R. R. Tolkien"));
 
-    // Match any documents with title=The Hobbit
-    JsonObject query = new JsonObject().put("title", "The Hobbit");
+		mongoClient.update("books", query, update, res -> {
 
-    // Set the author field
-    JsonObject update = new JsonObject().put("$set", new JsonObject().put("author", "J. R. R. Tolkien"));
+			if (res.succeeded()) {
 
-    mongoClient.update("books", query, update, res -> {
+				System.out.println("Book updated !");
 
-      if (res.succeeded()) {
+			} else {
 
-        System.out.println("Book updated !");
+				res.cause().printStackTrace();
+			}
 
-      } else {
+		});
 
-        res.cause().printStackTrace();
-      }
+	}
 
-    });
+	public void example6(MongoClient mongoClient) {
 
-  }
+		// Match any documents with title=The Hobbit
+		JsonObject query = new JsonObject().put("title", "The Hobbit");
 
-  public void example6(MongoClient mongoClient) {
+		// Set the author field
+		JsonObject update = new JsonObject().put("$set",
+				new JsonObject().put("author", "J. R. R. Tolkien"));
 
-    // Match any documents with title=The Hobbit
-    JsonObject query = new JsonObject().put("title", "The Hobbit");
+		UpdateOptions options = new UpdateOptions().setMulti(true);
 
-    // Set the author field
-    JsonObject update = new JsonObject().put("$set", new JsonObject().put("author", "J. R. R. Tolkien"));
+		mongoClient.updateWithOptions("books", query, update, options, res -> {
 
-    UpdateOptions options = new UpdateOptions().setMulti(true);
+			if (res.succeeded()) {
 
-    mongoClient.updateWithOptions("books", query, update, options, res -> {
+				System.out.println("Book updated !");
 
-      if (res.succeeded()) {
+			} else {
 
-        System.out.println("Book updated !");
+				res.cause().printStackTrace();
+			}
 
-      } else {
+		});
 
-        res.cause().printStackTrace();
-      }
+	}
 
-    });
+	public void example7(MongoClient mongoClient) {
 
-  }
+		JsonObject query = new JsonObject().put("title", "The Hobbit");
 
-  public void example7(MongoClient mongoClient) {
+		JsonObject replace = new JsonObject().put("title",
+				"The Lord of the Rings").put("author", "J. R. R. Tolkien");
 
-    JsonObject query = new JsonObject().put("title", "The Hobbit");
+		mongoClient.replace("books", query, replace, res -> {
 
-    JsonObject replace = new JsonObject().put("title", "The Lord of the Rings").put("author", "J. R. R. Tolkien");
+			if (res.succeeded()) {
 
-    mongoClient.replace("books", query, replace, res -> {
+				System.out.println("Book replaced !");
 
-      if (res.succeeded()) {
+			} else {
 
-        System.out.println("Book replaced !");
+				res.cause().printStackTrace();
 
-      } else {
+			}
 
-        res.cause().printStackTrace();
+		});
 
-      }
+	}
 
-    });
+	public void example8(MongoClient mongoClient) {
 
-  }
+		// empty query = match any
+		JsonObject query = new JsonObject();
 
-  public void example8(MongoClient mongoClient) {
+		mongoClient.find("books", query, res -> {
 
-    // empty query = match any
-    JsonObject query = new JsonObject();
+			if (res.succeeded()) {
 
-    mongoClient.find("books", query, res -> {
+				for (JsonObject json : res.result()) {
 
-      if (res.succeeded()) {
+					System.out.println(json.encodePrettily());
 
-        for (JsonObject json : res.result()) {
+				}
 
-          System.out.println(json.encodePrettily());
+			} else {
 
-        }
+				res.cause().printStackTrace();
 
-      } else {
+			}
 
-        res.cause().printStackTrace();
+		});
 
-      }
+	}
 
-    });
+	public void example9(MongoClient mongoClient) {
 
-  }
+		// will match all Tolkien books
+		JsonObject query = new JsonObject().put("author", "J. R. R. Tolkien");
 
-  public void example9(MongoClient mongoClient) {
+		mongoClient.find("books", query, res -> {
 
-    // will match all Tolkien books
-    JsonObject query = new JsonObject().put("author", "J. R. R. Tolkien");
+			if (res.succeeded()) {
 
-    mongoClient.find("books", query, res -> {
+				for (JsonObject json : res.result()) {
 
-      if (res.succeeded()) {
+					System.out.println(json.encodePrettily());
 
-        for (JsonObject json : res.result()) {
+				}
 
-          System.out.println(json.encodePrettily());
+			} else {
 
-        }
+				res.cause().printStackTrace();
 
-      } else {
+			}
 
-        res.cause().printStackTrace();
+		});
 
-      }
+	}
 
-    });
+	public void example10(MongoClient mongoClient) {
 
-  }
+		JsonObject query = new JsonObject().put("author", "J. R. R. Tolkien");
 
-  public void example10(MongoClient mongoClient) {
+		mongoClient.remove("books", query, res -> {
 
-    JsonObject query = new JsonObject().put("author", "J. R. R. Tolkien");
+			if (res.succeeded()) {
 
-    mongoClient.remove("books", query, res -> {
+				System.out.println("Never much liked Tolkien stuff!");
 
-      if (res.succeeded()) {
+			} else {
 
-        System.out.println("Never much liked Tolkien stuff!");
+				res.cause().printStackTrace();
 
-      } else {
+			}
+		});
 
-        res.cause().printStackTrace();
+	}
 
-      }
-    });
+	@SuppressWarnings("unused")
+	public void example11(MongoClient mongoClient) {
 
-  }
+		JsonObject query = new JsonObject().put("author", "J. R. R. Tolkien");
 
-  public void example11(MongoClient mongoClient) {
+		mongoClient.count("books", query, res -> {
 
-    JsonObject query = new JsonObject().put("author", "J. R. R. Tolkien");
+			if (res.succeeded()) {
 
-    mongoClient.count("books", query, res -> {
+				long num = res.result();
 
-      if (res.succeeded()) {
+			} else {
 
-        long num = res.result();
+				res.cause().printStackTrace();
 
-      } else {
+			}
+		});
 
-        res.cause().printStackTrace();
+	}
 
-      }
-    });
+	@SuppressWarnings("unused")
+	public void example11_1(MongoClient mongoClient) {
 
-  }
+		mongoClient.getCollections(res -> {
 
-  public void example11_1(MongoClient mongoClient) {
+			if (res.succeeded()) {
 
-    mongoClient.getCollections(res -> {
+				List<String> collections = res.result();
 
-      if (res.succeeded()) {
+			} else {
 
-        List<String> collections = res.result();
+				res.cause().printStackTrace();
 
-      } else {
+			}
+		});
 
-        res.cause().printStackTrace();
+	}
 
-      }
-    });
+	public void example11_2(MongoClient mongoClient) {
 
-  }
+		mongoClient.createCollection("mynewcollectionr", res -> {
 
-  public void example11_2(MongoClient mongoClient) {
+			if (res.succeeded()) {
 
-    mongoClient.createCollection("mynewcollectionr", res -> {
+				// Created ok!
 
-      if (res.succeeded()) {
+			} else {
 
-        // Created ok!
+				res.cause().printStackTrace();
 
-      } else {
+			}
+		});
 
-        res.cause().printStackTrace();
+	}
 
-      }
-    });
+	public void example11_3(MongoClient mongoClient) {
 
-  }
+		mongoClient.dropCollection("mynewcollectionr", res -> {
 
-  public void example11_3(MongoClient mongoClient) {
+			if (res.succeeded()) {
 
-    mongoClient.dropCollection("mynewcollectionr", res -> {
+				// Dropped ok!
 
-      if (res.succeeded()) {
+			} else {
 
-        // Dropped ok!
+				res.cause().printStackTrace();
 
-      } else {
+			}
+		});
 
-        res.cause().printStackTrace();
+	}
 
-      }
-    });
+	@SuppressWarnings("unused")
+	public void example12(MongoClient mongoClient) {
 
-  }
+		JsonObject command = new JsonObject().put("aggregate",
+				"collection_name").put("pipeline", new JsonArray());
 
-  public void example12(MongoClient mongoClient) {
+		mongoClient.runCommand("aggregate", command, res -> {
+			if (res.succeeded()) {
+				JsonArray resArr = res.result().getJsonArray("result");
+				// etc
+			} else {
+				res.cause().printStackTrace();
+			}
+		});
 
-    JsonObject command = new JsonObject()
-      .put("aggregate", "collection_name")
-      .put("pipeline", new JsonArray());
+	}
 
-    mongoClient.runCommand("aggregate", command, res -> {
-      if (res.succeeded()) {
-        JsonArray resArr = res.result().getJsonArray("result");
-        // etc
-      } else {
-        res.cause().printStackTrace();
-      }
-    });
+	public void example13_0(MongoClient mongoService) {
 
-  }
+		JsonObject document = new JsonObject().put("title", "The Hobbit")
+		// ISO-8601 date
+				.put("publicationDate",
+						new JsonObject().put("$date",
+								"1937-09-21T00:00:00+00:00"));
 
-  public void example13_0(MongoClient mongoService) {
+		mongoService.save("publishedBooks", document, res -> {
 
-    JsonObject document = new JsonObject().put("title", "The Hobbit")
-        //ISO-8601 date
-        .put("publicationDate", new JsonObject().put("$date", "1937-09-21T00:00:00+00:00"));
+			if (res.succeeded()) {
 
-    mongoService.save("publishedBooks", document, res -> {
+				Object id = res.result();
 
-      if (res.succeeded()) {
+				mongoService.findOne("publishedBooks", new JsonObject().put(
+						"_id", id), null, res2 -> {
+					if (res2.succeeded()) {
 
-        String id = res.result();
+						System.out.println("To retrieve ISO-8601 date : "
+								+ res2.result()
+										.getJsonObject("publicationDate")
+										.getString("$date"));
 
-        mongoService.findOne("publishedBooks", new JsonObject().put("_id", id), null, res2 -> {
-          if(res2.succeeded()) {
+					} else {
+						res2.cause().printStackTrace();
+					}
+				});
 
-            System.out.println("To retrieve ISO-8601 date : "
-                + res2.result().getJsonObject("publicationDate").getString("$date"));
+			} else {
+				res.cause().printStackTrace();
+			}
 
-          } else {
-            res2.cause().printStackTrace();
-          }
-        });
+		});
 
-      } else {
-        res.cause().printStackTrace();
-      }
-
-    });
-
-  }
+	}
 
 }

@@ -76,7 +76,7 @@ public class MongoClient {
    * @param resultHandler result handler will be provided with the id if document didn't already have one
    * @return 
    */
-  public MongoClient save(String collection, Map<String, Object> document, Handler<AsyncResult<String>> resultHandler) {
+  public MongoClient save(String collection, Map<String, Object> document, Handler<AsyncResult<Object>> resultHandler) {
     this.delegate.save(collection, document != null ? new io.vertx.core.json.JsonObject(document) : null, resultHandler);
     return this;
   }
@@ -88,7 +88,7 @@ public class MongoClient {
    * @param resultHandler result handler will be provided with the id if document didn't already have one
    * @return 
    */
-  public MongoClient saveWithOptions(String collection, Map<String, Object> document, WriteOption writeOption, Handler<AsyncResult<String>> resultHandler) {
+  public MongoClient saveWithOptions(String collection, Map<String, Object> document, WriteOption writeOption, Handler<AsyncResult<Object>> resultHandler) {
     this.delegate.saveWithOptions(collection, document != null ? new io.vertx.core.json.JsonObject(document) : null, writeOption, resultHandler);
     return this;
   }
@@ -99,7 +99,7 @@ public class MongoClient {
    * @param resultHandler result handler will be provided with the id if document didn't already have one
    * @return 
    */
-  public MongoClient insert(String collection, Map<String, Object> document, Handler<AsyncResult<String>> resultHandler) {
+  public MongoClient insert(String collection, Map<String, Object> document, Handler<AsyncResult<Object>> resultHandler) {
     this.delegate.insert(collection, document != null ? new io.vertx.core.json.JsonObject(document) : null, resultHandler);
     return this;
   }
@@ -111,7 +111,7 @@ public class MongoClient {
    * @param resultHandler result handler will be provided with the id if document didn't already have one
    * @return 
    */
-  public MongoClient insertWithOptions(String collection, Map<String, Object> document, WriteOption writeOption, Handler<AsyncResult<String>> resultHandler) {
+  public MongoClient insertWithOptions(String collection, Map<String, Object> document, WriteOption writeOption, Handler<AsyncResult<Object>> resultHandler) {
     this.delegate.insertWithOptions(collection, document != null ? new io.vertx.core.json.JsonObject(document) : null, writeOption, resultHandler);
     return this;
   }

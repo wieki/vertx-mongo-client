@@ -32,7 +32,7 @@
   </modules>
 
   <artifactId>vertx-mongo</artifactId>
-  <version>3.0.0</version>
+  <version>3.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Vert.x Mongo</name>

@@ -15,7 +15,6 @@ import java.util.function.Consumer;
 /**
  * @author <a href="mailto:nscavell@redhat.com">Nick Scavelli</a>
  */
-@SuppressWarnings("unused")
 public abstract class AbstractJsonCodec<O, A> implements Codec<O> {
 
   @Override
@@ -76,7 +75,6 @@ public abstract class AbstractJsonCodec<O, A> implements Codec<O> {
     }
   }
 
-  @SuppressWarnings("unchecked")
   protected void writeValue(BsonWriter writer, String name, Object value, EncoderContext ctx) {
     BsonType type = getBsonType(value);
     switch (type) {

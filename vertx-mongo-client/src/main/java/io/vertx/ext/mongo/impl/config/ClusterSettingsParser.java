@@ -1,15 +1,15 @@
 package io.vertx.ext.mongo.impl.config;
 
-import com.mongodb.ConnectionString;
-import com.mongodb.ServerAddress;
-import com.mongodb.connection.ClusterConnectionMode;
-import com.mongodb.connection.ClusterSettings;
-import com.mongodb.connection.ClusterType;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.mongodb.ConnectionString;
+import com.mongodb.ServerAddress;
+import com.mongodb.connection.ClusterConnectionMode;
+import com.mongodb.connection.ClusterSettings;
 
 /**
  * @author <a href="mailto:nscavell@redhat.com">Nick Scavelli</a>

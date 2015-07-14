@@ -576,7 +576,7 @@ public abstract class MongoClientTestBase extends MongoTestBase {
           assertNotNull(list);
           assertEquals(1, list.size());
           JsonObject result = list.get(0);
-          assertEquals(id, result.getString("_id"));
+          assertEquals(id, result.getValue("_id"));
           result.remove("_id");
           replacement.remove("_id"); // id won't be there for event bus
           assertEquals(replacement, result);
@@ -627,7 +627,7 @@ public abstract class MongoClientTestBase extends MongoTestBase {
         mongoClient.find(collection, new JsonObject(), onSuccess(list -> {
           assertNotNull(list);
           assertEquals(1, list.size());
-          assertEquals(id, list.get(0).getString("_id"));
+          assertEquals(id, list.get(0).getValue("_id"));
           testComplete();
         }));
       }));
@@ -657,7 +657,7 @@ public abstract class MongoClientTestBase extends MongoTestBase {
       for (JsonObject doc : results) {
         assertEquals(8, doc.size());
         assertEquals("fooed", doc.getString("foo"));
-        assertNotNull(doc.getString("_id"));
+        assertNotNull(doc.getValue("_id"));
       }
     });
   }
@@ -670,7 +670,7 @@ public abstract class MongoClientTestBase extends MongoTestBase {
       for (JsonObject doc : results) {
         assertEquals(8, doc.size());
         assertEquals("fooed", doc.getString("foo"));
-        assertNotNull(doc.getString("_id"));
+        assertNotNull(doc.getValue("_id"));
       }
     });
   }

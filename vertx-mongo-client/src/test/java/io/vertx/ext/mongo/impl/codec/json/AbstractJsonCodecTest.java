@@ -14,12 +14,12 @@ public class AbstractJsonCodecTest {
 
   @Test
   public void getBsonType_returnsNullType_whenValueIsNull() {
-    AbstractJsonCodec codec = getCodec();
+    AbstractJsonCodec<?,?> codec = getCodec();
     Assert.assertEquals(BsonType.NULL, codec.getBsonType(null));
   }
 
-  private AbstractJsonCodec getCodec() {
-    return new AbstractJsonCodec() {
+  private AbstractJsonCodec<?,?> getCodec() {
+    return new AbstractJsonCodec<Object,Object>() {
       @Override
       protected Object newObject() {
         return null;
@@ -36,7 +36,7 @@ public class AbstractJsonCodecTest {
       }
 
       @Override
-      protected void forEach(Object object, BiConsumer objectConsumer) {
+      protected void forEach(Object object, BiConsumer<String,Object> objectConsumer) {
 
       }
 
@@ -56,12 +56,12 @@ public class AbstractJsonCodecTest {
       }
 
       @Override
-      protected void forEach(Object array, Consumer arrayConsumer) {
+      protected void forEach(Object array, Consumer<Object> arrayConsumer) {
 
       }
 
       @Override
-      public Class getEncoderClass() {
+      public Class<Object> getEncoderClass() {
         return null;
       }
     };
