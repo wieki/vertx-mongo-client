@@ -89,7 +89,7 @@ public class MongoClient {
    * @param resultHandler result handler will be provided with the id if document didn't already have one
    * @return 
    */
-  public MongoClient save(String collection, JsonObject document, Handler<AsyncResult<String>> resultHandler) { 
+  public MongoClient save(String collection, JsonObject document, Handler<AsyncResult<JsonObject>> resultHandler) { 
     this.delegate.save(collection, document, resultHandler);
     return this;
   }
@@ -100,8 +100,8 @@ public class MongoClient {
    * @param document the document
    * @return 
    */
-  public Observable<String> saveObservable(String collection, JsonObject document) { 
-    io.vertx.rx.java.ObservableFuture<String> resultHandler = io.vertx.rx.java.RxHelper.observableFuture();
+  public Observable<JsonObject> saveObservable(String collection, JsonObject document) { 
+    io.vertx.rx.java.ObservableFuture<JsonObject> resultHandler = io.vertx.rx.java.RxHelper.observableFuture();
     save(collection, document, resultHandler.toHandler());
     return resultHandler;
   }
@@ -114,7 +114,7 @@ public class MongoClient {
    * @param resultHandler result handler will be provided with the id if document didn't already have one
    * @return 
    */
-  public MongoClient saveWithOptions(String collection, JsonObject document, WriteOption writeOption, Handler<AsyncResult<String>> resultHandler) { 
+  public MongoClient saveWithOptions(String collection, JsonObject document, WriteOption writeOption, Handler<AsyncResult<JsonObject>> resultHandler) { 
     this.delegate.saveWithOptions(collection, document, writeOption, resultHandler);
     return this;
   }
@@ -126,8 +126,8 @@ public class MongoClient {
    * @param writeOption the write option to use
    * @return 
    */
-  public Observable<String> saveWithOptionsObservable(String collection, JsonObject document, WriteOption writeOption) { 
-    io.vertx.rx.java.ObservableFuture<String> resultHandler = io.vertx.rx.java.RxHelper.observableFuture();
+  public Observable<JsonObject> saveWithOptionsObservable(String collection, JsonObject document, WriteOption writeOption) { 
+    io.vertx.rx.java.ObservableFuture<JsonObject> resultHandler = io.vertx.rx.java.RxHelper.observableFuture();
     saveWithOptions(collection, document, writeOption, resultHandler.toHandler());
     return resultHandler;
   }
@@ -139,7 +139,7 @@ public class MongoClient {
    * @param resultHandler result handler will be provided with the id if document didn't already have one
    * @return 
    */
-  public MongoClient insert(String collection, JsonObject document, Handler<AsyncResult<String>> resultHandler) { 
+  public MongoClient insert(String collection, JsonObject document, Handler<AsyncResult<JsonObject>> resultHandler) { 
     this.delegate.insert(collection, document, resultHandler);
     return this;
   }
@@ -150,8 +150,8 @@ public class MongoClient {
    * @param document the document
    * @return 
    */
-  public Observable<String> insertObservable(String collection, JsonObject document) { 
-    io.vertx.rx.java.ObservableFuture<String> resultHandler = io.vertx.rx.java.RxHelper.observableFuture();
+  public Observable<JsonObject> insertObservable(String collection, JsonObject document) { 
+    io.vertx.rx.java.ObservableFuture<JsonObject> resultHandler = io.vertx.rx.java.RxHelper.observableFuture();
     insert(collection, document, resultHandler.toHandler());
     return resultHandler;
   }
@@ -164,7 +164,7 @@ public class MongoClient {
    * @param resultHandler result handler will be provided with the id if document didn't already have one
    * @return 
    */
-  public MongoClient insertWithOptions(String collection, JsonObject document, WriteOption writeOption, Handler<AsyncResult<String>> resultHandler) { 
+  public MongoClient insertWithOptions(String collection, JsonObject document, WriteOption writeOption, Handler<AsyncResult<JsonObject>> resultHandler) { 
     this.delegate.insertWithOptions(collection, document, writeOption, resultHandler);
     return this;
   }
@@ -176,8 +176,8 @@ public class MongoClient {
    * @param writeOption the write option to use
    * @return 
    */
-  public Observable<String> insertWithOptionsObservable(String collection, JsonObject document, WriteOption writeOption) { 
-    io.vertx.rx.java.ObservableFuture<String> resultHandler = io.vertx.rx.java.RxHelper.observableFuture();
+  public Observable<JsonObject> insertWithOptionsObservable(String collection, JsonObject document, WriteOption writeOption) { 
+    io.vertx.rx.java.ObservableFuture<JsonObject> resultHandler = io.vertx.rx.java.RxHelper.observableFuture();
     insertWithOptions(collection, document, writeOption, resultHandler.toHandler());
     return resultHandler;
   }

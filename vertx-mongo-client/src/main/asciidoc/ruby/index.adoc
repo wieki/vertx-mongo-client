@@ -197,7 +197,7 @@ mongoClient.insert("books", document) { |res_err,res|
 
   if (res_err == nil)
 
-    #...
+    # ...
 
   else
 

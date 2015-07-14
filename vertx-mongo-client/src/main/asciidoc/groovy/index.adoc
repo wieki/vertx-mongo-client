@@ -197,7 +197,7 @@ mongoClient.insert("books", document, { res ->
 
   if (res.succeeded()) {
 
-    //...
+    // ...
 
   } else {
 

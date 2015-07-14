@@ -48,7 +48,7 @@ var MongoClient = function(j_val) {
     if (__args.length === 3 && typeof __args[0] === 'string' && typeof __args[1] === 'object' && typeof __args[2] === 'function') {
       j_mongoClient["save(java.lang.String,io.vertx.core.json.JsonObject,io.vertx.core.Handler)"](collection, utils.convParamJsonObject(document), function(ar) {
       if (ar.succeeded()) {
-        resultHandler(ar.result(), null);
+        resultHandler(utils.convReturnJson(ar.result()), null);
       } else {
         resultHandler(null, ar.cause());
       }
@@ -72,7 +72,7 @@ var MongoClient = function(j_val) {
     if (__args.length === 4 && typeof __args[0] === 'string' && typeof __args[1] === 'object' && typeof __args[2] === 'string' && typeof __args[3] === 'function') {
       j_mongoClient["saveWithOptions(java.lang.String,io.vertx.core.json.JsonObject,io.vertx.ext.mongo.WriteOption,io.vertx.core.Handler)"](collection, utils.convParamJsonObject(document), io.vertx.ext.mongo.WriteOption.valueOf(__args[2]), function(ar) {
       if (ar.succeeded()) {
-        resultHandler(ar.result(), null);
+        resultHandler(utils.convReturnJson(ar.result()), null);
       } else {
         resultHandler(null, ar.cause());
       }
@@ -95,7 +95,7 @@ var MongoClient = function(j_val) {
     if (__args.length === 3 && typeof __args[0] === 'string' && typeof __args[1] === 'object' && typeof __args[2] === 'function') {
       j_mongoClient["insert(java.lang.String,io.vertx.core.json.JsonObject,io.vertx.core.Handler)"](collection, utils.convParamJsonObject(document), function(ar) {
       if (ar.succeeded()) {
-        resultHandler(ar.result(), null);
+        resultHandler(utils.convReturnJson(ar.result()), null);
       } else {
         resultHandler(null, ar.cause());
       }
@@ -119,7 +119,7 @@ var MongoClient = function(j_val) {
     if (__args.length === 4 && typeof __args[0] === 'string' && typeof __args[1] === 'object' && typeof __args[2] === 'string' && typeof __args[3] === 'function') {
       j_mongoClient["insertWithOptions(java.lang.String,io.vertx.core.json.JsonObject,io.vertx.ext.mongo.WriteOption,io.vertx.core.Handler)"](collection, utils.convParamJsonObject(document), io.vertx.ext.mongo.WriteOption.valueOf(__args[2]), function(ar) {
       if (ar.succeeded()) {
-        resultHandler(ar.result(), null);
+        resultHandler(utils.convReturnJson(ar.result()), null);
       } else {
         resultHandler(null, ar.cause());
       }
